@@ -9,9 +9,6 @@ import '../widgets/usage_examples_section.dart';
 import '../widgets/comparison_section.dart';
 import '../data/section_content.dart';
 
-/// شاشة شرح نظام معالجة الأخطاء
-///
-/// تعرض شرح مفصل لنظام معالجة الأخطاء مع أمثلة تفاعلية
 class ErrorExplanationView extends StatefulWidget {
   const ErrorExplanationView({super.key});
 
