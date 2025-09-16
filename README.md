@@ -255,30 +255,6 @@ lib/
 2. Use existing components
 3. Add the screen to the main app
 
-## Examples
-
-### Using a Component
-
-```dart
-import '../widgets/info_section.dart';
-
-Widget build(BuildContext context) {
-  return InfoSection(
-    title: 'Section Title',
-    content: 'Section Content',
-    icon: Icons.info,
-  );
-}
-```
-
-### Using Content
-
-```dart
-import '../data/section_content.dart';
-
-String content = SectionContent.introductionContent;
-```
-
 ## Summary
 
 This error handling system provides:
