@@ -1,67 +1,67 @@
-# مرجع معالجة الأخطاء - Error Handler Reference
+# Error Handler Reference
 
-## نظرة عامة
+## Overview
 
-هذا المشروع هو مرجع بسيط وواضح لمعالجة الأخطاء في Flutter. يوضح كيفية بناء نظام معالجة أخطاء منظم يمكن استخدامه في أي مشروع.
+This project is a simple and clear reference for error handling in Flutter. It demonstrates how to build an organized error handling system that can be used in any project.
 
-## لماذا نحتاج نظام معالجة الأخطاء؟
+## Why Do We Need an Error Handling System?
 
-### المشاكل بدون نظام معالجة أخطاء:
+### Problems without an error handling system:
 
-- ❌ التطبيق يتوقف عند حدوث خطأ
-- ❌ رسائل خطأ غير واضحة للمستخدم
-- ❌ صعوبة في تتبع وحل المشاكل
-- ❌ تجربة مستخدم سيئة
+- ❌ App crashes when an error occurs
+- ❌ Unclear error messages for users
+- ❌ Difficulty in tracking and solving problems
+- ❌ Poor user experience
 
-### الفوائد مع نظام معالجة الأخطاء:
+### Benefits with an error handling system:
 
-- ✅ التطبيق يستمر في العمل
-- ✅ رسائل خطأ واضحة ومفيدة
-- ✅ سهولة تتبع وحل المشاكل
-- ✅ تجربة مستخدم ممتازة
+- ✅ App continues to work
+- ✅ Clear and helpful error messages
+- ✅ Easy problem tracking and solving
+- ✅ Excellent user experience
 
-## بنية النظام
+## System Architecture
 
-### 1. ErrorModel - نموذج البيانات
+### 1. ErrorModel - Data Model
 
 ```dart
 class ErrorModel {
-  final String message;           // رسالة الخطأ
-  final String? status;          // حالة HTTP
-  final String? code;            // كود الخطأ
-  final Map<String, List<String>>? validationErrors; // أخطاء التحقق
-  final Map<String, dynamic>? additionalData;        // بيانات إضافية
+  final String message;           // Error message
+  final String? status;          // HTTP status
+  final String? code;            // Error code
+  final Map<String, List<String>>? validationErrors; // Validation errors
+  final Map<String, dynamic>? additionalData;        // Additional data
 }
 ```
 
-### 2. Exceptions - الاستثناءات
+### 2. Exceptions - Exception Classes
 
 ```dart
-// الاستثناء الأساسي
+// Base exception
 abstract class AppException implements Exception {
   final String message;
   final String? code;
   final dynamic originalError;
 }
 
-// أنواع الاستثناءات
-class ServerException extends AppException    // أخطاء الخادم
-class NetworkException extends AppException   // أخطاء الشبكة
-class CacheException extends AppException     // أخطاء التخزين
-class ValidationException extends AppException // أخطاء التحقق
+// Exception types
+class ServerException extends AppException    // Server errors
+class NetworkException extends AppException   // Network errors
+class CacheException extends AppException     // Storage errors
+class ValidationException extends AppException // Validation errors
 ```
 
-### 3. Failures - حالات الفشل
+### 3. Failures - Failure Classes
 
 ```dart
-// الفشل الأساسي
+// Base failure
 abstract class Failure {
   final String message;
   final String? code;
   final dynamic originalError;
 }
 
-// أنواع حالات الفشل
+// Failure types
 class ServerFailure extends Failure
 class NetworkFailure extends Failure
 class CacheFailure extends Failure
@@ -69,50 +69,50 @@ class ValidationFailure extends Failure
 class UnknownFailure extends Failure
 ```
 
-### 4. ExceptionHandler - معالج الأخطاء
+### 4. ExceptionHandler - Error Handler
 
 ```dart
 class ExceptionHandler {
-  // تحويل DioException إلى AppException
+  // Convert DioException to AppException
   static AppException handleDioException(DioException e);
 
-  // تحويل AppException إلى Failure
+  // Convert AppException to Failure
   static Failure exceptionToFailure(AppException exception);
 }
 ```
 
-## كيفية الاستخدام
+## How to Use
 
-### الاستخدام الأساسي
+### Basic Usage
 
 ```dart
 import 'package:error_handler/error.dart';
 
 try {
   final response = await dio.get('/api/users');
-  // معالجة البيانات الناجحة
+  // Handle successful data
 } on DioException catch (e) {
-  // تحويل DioException إلى AppException
+  // Convert DioException to AppException
   final exception = ExceptionHandler.handleDioException(e);
 
-  // تحويل AppException إلى Failure
+  // Convert AppException to Failure
   final failure = ExceptionHandler.exceptionToFailure(exception);
 
-  // عرض رسالة الخطأ للمستخدم
+  // Show error message to user
   showErrorDialog(failure.userMessage);
 }
 ```
 
-## أنواع الأخطاء المدعومة
+## Supported Error Types
 
-### 1. NetworkException - أخطاء الشبكة
+### 1. NetworkException - Network Errors
 
-- انقطاع الإنترنت
-- انتهاء مهلة الاتصال
-- خطأ في الشهادة الأمنية
-- إلغاء الطلب
+- Internet disconnection
+- Connection timeout
+- SSL certificate error
+- Request cancellation
 
-### 2. ServerException - أخطاء الخادم
+### 2. ServerException - Server Errors
 
 - 400: Bad Request
 - 401: Unauthorized
@@ -123,88 +123,170 @@ try {
 - 502: Bad Gateway
 - 503: Service Unavailable
 
-### 3. ValidationException - أخطاء التحقق
+### 3. ValidationException - Validation Errors
 
-- حقول مطلوبة مفقودة
-- تنسيق بيانات غير صحيح
-- قيود التحقق من البيانات
+- Missing required fields
+- Incorrect data format
+- Data validation constraints
 
-### 4. CacheException - أخطاء التخزين
+### 4. CacheException - Storage Errors
 
-- فشل في حفظ البيانات
-- فشل في قراءة البيانات
-- مساحة تخزين ممتلئة
+- Failed to save data
+- Failed to read data
+- Storage space full
 
-## أفضل الممارسات
+## Best Practices
 
-### 1. استخدم try-catch دائماً
+### 1. Always Use try-catch
 
 ```dart
-// ✅ صحيح
+// ✅ Correct
 try {
   final response = await dio.get('/api/users');
 } on DioException catch (e) {
-  // معالجة الخطأ
+  // Handle error
 }
 
-// ❌ خطأ
-final response = await dio.get('/api/users'); // قد يتوقف التطبيق
+// ❌ Wrong
+final response = await dio.get('/api/users'); // App may crash
 ```
 
-### 2. رسائل خطأ واضحة
+### 2. Clear Error Messages
 
 ```dart
-// ✅ صحيح
+// ✅ Correct
 showErrorDialog(failure.userMessage);
 
-// ❌ خطأ
-showErrorDialog('Error occurred'); // رسالة غير واضحة
+// ❌ Wrong
+showErrorDialog('Error occurred'); // Unclear message
 ```
 
-### 3. تحقق من نوع الخطأ
+### 3. Check Error Type
 
 ```dart
-// ✅ صحيح
+// ✅ Correct
 if (failure.isNetworkError) {
-  // إعادة المحاولة
+  // Retry
 } else if (failure.isServerError) {
-  // عرض رسالة خطأ خادم
+  // Show server error message
 }
 
-// ❌ خطأ
-// معالجة جميع الأخطاء بنفس الطريقة
+// ❌ Wrong
+// Handle all errors the same way
 ```
 
-## التشغيل
+## Running the Project
 
 ```bash
 flutter pub get
 flutter run
 ```
 
-## هيكل المشروع
+## Project Structure
 
 ```
 lib/
-├── main.dart                    # التطبيق الرئيسي
-├── screens/
-│   └── error_explanation_screen.dart  # شاشة الشرح
-└── error/
-    ├── error.dart              # ملف التصدير الرئيسي
-    ├── error_model.dart        # نموذج بيانات الخطأ
-    ├── exceptions.dart         # الاستثناءات
-    ├── failures.dart          # حالات الفشل
-    └── README.md              # توثيق مفصل
+├── main.dart                    # Main app
+├── views/                       # Views
+│   └── error_explanation_view.dart
+├── widgets/                     # Widgets
+│   ├── section_header.dart
+│   ├── info_section.dart
+│   ├── error_test_section.dart
+│   ├── error_types_section.dart
+│   ├── best_practices_section.dart
+│   ├── usage_examples_section.dart
+│   └── comparison_section.dart
+├── data/                        # Data
+│   └── section_content.dart
+├── error/                       # Error handling system
+│   ├── error.dart              # Main export file
+│   ├── error_model.dart        # Error data model
+│   ├── exceptions.dart         # Exceptions
+│   ├── failures.dart          # Failures
+│   └── README.md              # Detailed documentation
+└── examples/                    # Examples
+    ├── usage_example.dart
+    └── README.md
 ```
 
-## الخلاصة
+## Features
 
-نظام معالجة الأخطاء هذا يوفر:
+### ✅ Organization
 
-- **تنظيم واضح** للأخطاء
-- **سهولة الاستخدام** في التطبيق
-- **مرونة** في إضافة أنواع أخطاء جديدة
-- **رسائل واضحة** للمستخدمين
-- **تتبع سهل** للمشاكل
+- Separated components into individual widgets
+- Separated data into individual files
+- Separated screens into individual views
 
-استخدم هذا النظام كأساس لبناء نظام معالجة أخطاء قوي في مشاريعك.
+### ✅ Reusability
+
+- Each widget can be used in other places
+- Separate content that can be easily modified
+- Customizable components
+
+### ✅ Maintenance
+
+- Organized and clear code
+- Easy to add new components
+- Easy to modify content
+
+### ✅ Performance
+
+- Load components only when needed
+- Separate display logic from data
+- Optimized and organized code
+
+## How to Use
+
+### Adding a New Component
+
+1. Create a new file in the `widgets/` folder
+2. Follow the same pattern as existing components
+3. Import the component in the required screen
+
+### Modifying Content
+
+1. Edit the `data/section_content.dart` file
+2. Use the variables in components
+
+### Adding a New Screen
+
+1. Create a new file in the `views/` folder
+2. Use existing components
+3. Add the screen to the main app
+
+## Examples
+
+### Using a Component
+
+```dart
+import '../widgets/info_section.dart';
+
+Widget build(BuildContext context) {
+  return InfoSection(
+    title: 'Section Title',
+    content: 'Section Content',
+    icon: Icons.info,
+  );
+}
+```
+
+### Using Content
+
+```dart
+import '../data/section_content.dart';
+
+String content = SectionContent.introductionContent;
+```
+
+## Summary
+
+This error handling system provides:
+
+- **Clear organization** for errors
+- **Easy usage** in the app
+- **Flexibility** in adding new error types
+- **Clear messages** for users
+- **Easy tracking** of problems
+
+Use this system as a foundation to build a strong error handling system in your projects.

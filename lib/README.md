@@ -1,11 +1,11 @@
-# هيكل المشروع - Project Structure
+# Project Structure
 
 ```
 lib/
-├── main.dart                    # التطبيق الرئيسي
-├── views/                       # الشاشات (Views)
+├── main.dart                    # Main app
+├── views/                       # Views
 │   └── error_explanation_view.dart
-├── widgets/                     # المكونات (Widgets)
+├── widgets/                     # Widgets
 │   ├── section_header.dart
 │   ├── info_section.dart
 │   ├── error_test_section.dart
@@ -13,113 +13,113 @@ lib/
 │   ├── best_practices_section.dart
 │   ├── usage_examples_section.dart
 │   └── comparison_section.dart
-├── data/                        # البيانات (Data)
+├── data/                        # Data
 │   └── section_content.dart
-├── error/                       # نظام معالجة الأخطاء
+├── error/                       # Error handling system
 │   ├── error.dart
 │   ├── error_model.dart
 │   ├── exceptions.dart
 │   ├── failures.dart
 │   └── README.md
-└── examples/                    # الأمثلة
+└── examples/                    # Examples
     ├── usage_example.dart
     └── README.md
 ```
 
-## 🏗️ طبقات المشروع
+## 🏗️ Project Layers
 
-### 1. Views (الشاشات)
+### 1. Views
 
-- **error_explanation_view.dart**: الشاشة الرئيسية التي تعرض شرح نظام معالجة الأخطاء
+- **error_explanation_view.dart**: Main screen that displays the error handling system explanation
 
-### 2. Widgets (المكونات)
+### 2. Widgets
 
-- **section_header.dart**: مكون رأس القسم
-- **info_section.dart**: مكون قسم المعلومات
-- **error_test_section.dart**: مكون قسم اختبار الأخطاء
-- **error_types_section.dart**: مكون قسم أنواع الأخطاء
-- **best_practices_section.dart**: مكون قسم أفضل الممارسات
-- **usage_examples_section.dart**: مكون قسم أمثلة الاستخدام
-- **comparison_section.dart**: مكون قسم المقارنة
+- **section_header.dart**: Section header component
+- **info_section.dart**: Information section component
+- **error_test_section.dart**: Error testing section component
+- **error_types_section.dart**: Error types section component
+- **best_practices_section.dart**: Best practices section component
+- **usage_examples_section.dart**: Usage examples section component
+- **comparison_section.dart**: Comparison section component
 
-### 3. Data (البيانات)
+### 3. Data
 
-- **section_content.dart**: محتوى أقسام الشاشة
+- **section_content.dart**: Screen section content
 
-### 4. Error (نظام معالجة الأخطاء)
+### 4. Error (Error Handling System)
 
-- **error.dart**: ملف التصدير الرئيسي
-- **error_model.dart**: نموذج بيانات الخطأ
-- **exceptions.dart**: الاستثناءات
-- **failures.dart**: حالات الفشل
+- **error.dart**: Main export file
+- **error_model.dart**: Error data model
+- **exceptions.dart**: Exceptions
+- **failures.dart**: Failures
 
-### 5. Examples (الأمثلة)
+### 5. Examples
 
-- **usage_example.dart**: أمثلة شاملة لاستخدام النظام
-- **README.md**: توثيق الأمثلة
+- **usage_example.dart**: Comprehensive usage examples
+- **README.md**: Examples documentation
 
-## 🎯 المميزات
+## 🎯 Features
 
-### ✅ التنظيم
+### ✅ Organization
 
-- فصل المكونات إلى widgets منفصلة
-- فصل البيانات إلى ملفات منفصلة
-- فصل الشاشات إلى views منفصلة
+- Separated components into individual widgets
+- Separated data into individual files
+- Separated screens into individual views
 
-### ✅ إعادة الاستخدام
+### ✅ Reusability
 
-- كل widget يمكن استخدامه في أماكن أخرى
-- محتوى منفصل يمكن تعديله بسهولة
-- مكونات قابلة للتخصيص
+- Each widget can be used in other places
+- Separate content that can be easily modified
+- Customizable components
 
-### ✅ الصيانة
+### ✅ Maintenance
 
-- كود منظم وواضح
-- سهولة إضافة مكونات جديدة
-- سهولة تعديل المحتوى
+- Organized and clear code
+- Easy to add new components
+- Easy to modify content
 
-### ✅ الأداء
+### ✅ Performance
 
-- تحميل مكونات عند الحاجة فقط
-- فصل منطق العرض عن البيانات
-- كود محسن ومنظم
+- Load components only when needed
+- Separate display logic from data
+- Optimized and organized code
 
-## 🚀 كيفية الاستخدام
+## 🚀 How to Use
 
-### إضافة مكون جديد
+### Adding a New Component
 
-1. أنشئ ملف جديد في مجلد `widgets/`
-2. اتبع نفس نمط المكونات الموجودة
-3. استورد المكون في الشاشة المطلوبة
+1. Create a new file in the `widgets/` folder
+2. Follow the same pattern as existing components
+3. Import the component in the required screen
 
-### تعديل المحتوى
+### Modifying Content
 
-1. عدل الملف `data/section_content.dart`
-2. استخدم المتغيرات في المكونات
+1. Edit the `data/section_content.dart` file
+2. Use the variables in components
 
-### إضافة شاشة جديدة
+### Adding a New Screen
 
-1. أنشئ ملف جديد في مجلد `views/`
-2. استخدم المكونات الموجودة
-3. أضف الشاشة إلى التطبيق الرئيسي
+1. Create a new file in the `views/` folder
+2. Use existing components
+3. Add the screen to the main app
 
-## 📝 أمثلة
+## 📝 Examples
 
-### استخدام مكون
+### Using a Component
 
 ```dart
 import '../widgets/info_section.dart';
 
 Widget build(BuildContext context) {
   return InfoSection(
-    title: 'عنوان القسم',
-    content: 'محتوى القسم',
+    title: 'Section Title',
+    content: 'Section Content',
     icon: Icons.info,
   );
 }
 ```
 
-### استخدام محتوى
+### Using Content
 
 ```dart
 import '../data/section_content.dart';
@@ -127,9 +127,9 @@ import '../data/section_content.dart';
 String content = SectionContent.introductionContent;
 ```
 
-## 🔧 التطوير
+## 🔧 Development
 
-### إضافة مكون جديد
+### Adding a New Component
 
 ```dart
 // lib/widgets/new_section.dart
@@ -147,10 +147,10 @@ class NewSection extends StatelessWidget {
         child: Column(
           children: [
             const SectionHeader(
-              title: 'عنوان جديد',
+              title: 'New Title',
               icon: Icons.new_releases,
             ),
-            // باقي المحتوى...
+            // Rest of content...
           ],
         ),
       ),
@@ -159,24 +159,24 @@ class NewSection extends StatelessWidget {
 }
 ```
 
-### إضافة محتوى جديد
+### Adding New Content
 
 ```dart
 // lib/data/section_content.dart
 class SectionContent {
   static String get newContent => '''
-محتوى جديد هنا...
+New content here...
   ''';
 }
 ```
 
-## 📚 الخلاصة
+## 📚 Summary
 
-هذا التنظيم الجديد يجعل المشروع:
+This new organization makes the project:
 
-- **أكثر تنظيماً** ووضوحاً
-- **أسهل في الصيانة** والتطوير
-- **أكثر مرونة** في التخصيص
-- **أفضل أداءً** في التطبيق
+- **More organized** and clear
+- **Easier to maintain** and develop
+- **More flexible** in customization
+- **Better performance** in the app
 
-استخدم هذا الهيكل كمرجع لتنظيم مشاريع Flutter الأخرى.
+Use this structure as a reference for organizing other Flutter projects.
